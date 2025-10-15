@@ -1,0 +1,29 @@
+name: Deploy FastAPI Webhook
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'  # or your preferred version
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Uvicorn server (example, remove for cloud deploy)
+        run: uvicorn main:app --host 0.0.0.0 --port 10000
+        # For actual deployment to services like Render, you usually don't run this step here.
+        # Instead, use the workflow for deploy scripts or Docker build/push.
+
+      # Add deployment steps for your target platform if needed.
